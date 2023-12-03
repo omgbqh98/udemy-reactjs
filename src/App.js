@@ -1,21 +1,20 @@
 import './App.scss';
 import Header from './components/header/Header';
-import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
     <div className='app-container'>
-      <Header></Header>
-      <div>
-        test link
+      <div className='header-container'>
+        <Header></Header>
       </div>
-      <div>
-        <button>
-          <Link to="/users">go User</Link>
-        </button>
-        <button>
-          <Link to="/admin">go admin</Link>
-        </button>
+      <div className='main-container'>
+        <div className='sidenav-container'>
+        </div>
+        <div className='app-content'>
+          <Outlet></Outlet>
+          {/* outlet để hiện tất cả component con vào đây */}
+        </div>
       </div>
     </div>
   );

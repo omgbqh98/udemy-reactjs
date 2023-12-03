@@ -7,3 +7,69 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@media (min-width: 1400px) {
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1760px !important;
+  }
+}
+
+
+.app-container {
+  .header-container {
+    .btn-login {
+      border-radius: 5px;
+      margin-right: 15px;
+      padding: 0 15px;
+      border: 1px solid #515050;
+      height: 40px;
+
+      &:hover {
+        background: #cebdbd;
+      }
+    }
+
+    .btn-singup {
+      border-radius: 5px;
+      margin-right: 15px;
+      padding: 0 15px;
+      border: 1px solid #515050;
+      background: #0e0d0d;
+      color: white;
+      height: 40px;
+
+      &:hover {
+        background: #424040;
+      }
+    }
+
+
+
+    .navbar {
+      z-index: 10;
+      padding-top: 20px;
+
+      // opacity: 0.6;
+      background-color: rgba(0, 0, 0, 0) !important;
+
+      .nav-link {
+        &.active {
+          color: #00bfff;
+        }
+      }
+    }
+  }
+}
+
+video {
+  position: fixed;
+  bottom: 50;
+  right: 330px;
+  width: 40vw;
+}
