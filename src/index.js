@@ -9,6 +9,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from './components/user/User';
 import Admin from './components/admin/Admin';
 import Home from './components/home/Home';
+import ManageUser from './components/admin/content/ManageUser';
+import Dashboard from './components/admin/content/DashBoard';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,7 +22,10 @@ root.render(
           <Route path='/' element={<App />}>
             <Route index element={<Home />}></Route>  //index để khi outlet ko trùng với link nào thì sẽ vào index
             <Route path='/users' element={<User />}></Route>
-            <Route path='/admin' element={<Admin />}></Route>
+          </Route>
+          <Route path='/admin' element={<Admin />}>
+            <Route index element={<Dashboard />}></Route>
+            <Route path='manage-users' element={<ManageUser />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
