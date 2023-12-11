@@ -7,21 +7,23 @@ import './ManageUsers.scss';
 const ManageUser = (props) => {
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     return (
         <div className="manage-users-container">
             <div className="title">
                 users manager
             </div>
             <div className="users-content">
-                <div>
-
+                <div className='btn-add-new'>
+                    <button className='btn btn-primary' onClick={() => setShow(true)}>Add new users</button>
                 </div>
-                <div>
+                <div className='table-users-container'>
                     table
                 </div>
-                <ModalCreateUser></ModalCreateUser>
+                <ModalCreateUser
+                    show={show}
+                    setShow={setShow}
+                >
+                </ModalCreateUser>
             </div>
         </div>
     )

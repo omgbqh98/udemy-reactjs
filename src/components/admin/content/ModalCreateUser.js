@@ -2,9 +2,12 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from "react-icons/fc";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const ModalCreateUser = (props) => {
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
+    const { show, setShow } = props;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,8 +16,15 @@ const ModalCreateUser = (props) => {
     const [role, setRole] = useState("USER");
     const [previewImage, setPreviewImage] = useState("");
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        setShow(false)
+        setEmail("")
+        setPassword("")
+        setUsername("")
+        setImage("")
+        setRole("")
+        setPreviewImage("")
+    };
 
     const handleUploadImg = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
@@ -23,9 +33,47 @@ const ModalCreateUser = (props) => {
         }
     }
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const handleSaveUser = async () => {
+        //validate
+        if (!validateEmail(email)) {
+            toast.error("Invalid email")
+            return;
+        }
+        if (!password) {
+            toast.error("please input email")
+            return;
+        }
+
+        //submit data
+        const data = new FormData();
+        data.append('email', email);
+        data.append('password', password);
+        data.append('username', username);
+        data.append('role', role);
+        data.append('userImage', image);
+
+        let res = await axios.post('http://localhost:8081/api/v1/participant', data)
+        if (res.data && res.data.EC === 0) {
+            toast.success(res.data.EM);
+            handleClose();
+        }
+        if (res.data && res.data.EC !== 0) {
+            toast.error(res.data.EM);
+        }
+
+    }
+
     return (
         <>
-            <button variant="primary" onClick={handleShow}>Add new users</button>
+
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -58,7 +106,7 @@ const ModalCreateUser = (props) => {
                     </div>
                     <div className="col-md-4">
                         <label className="form-label">Role</label>
-                        <select className="form-select" onChange={(event) => setRole(event.target.value)}>
+                        <select className="form-select" onChange={(event) => setRole(event.target.value)} value={role}>
                             <option value={"USER"}>USER</option>
                             <option value={"ADMIN"}>ADMIN</option>
                         </select>
@@ -84,7 +132,7 @@ const ModalCreateUser = (props) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={() => handleSaveUser()}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
