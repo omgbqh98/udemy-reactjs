@@ -2,27 +2,32 @@ import { useState, useEffect } from 'react';
 import ModalCreateUser from './ModalCreateUser';
 import './ManageUsers.scss';
 import TableUser from './TableUser';
-import { getListUser } from '../../../service/apiServices';
+import { getListUser, getListUserPage } from '../../../service/apiServices';
 import ModalUpdateUser from './ModalUpdateUser';
 import ModalViewUser from './ModalViewUser';
 import ModalConfirmDeleteUser from './ModalConfirmDeleteUser';
 
 const ManageUser = (props) => {
+    const LIMIT_USER = 5;
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [dataUpdate, setDataUpdate] = useState({});
+    const [pageCount, setPageCount] = useState({});
 
     const [listUser, setListUser] = useState([]);
 
     useEffect(() => {
-        fetchListUsers();
+        fetchListUsersWithPage(1);
     }, [])
 
-    const fetchListUsers = async () => {
-        let data = await getListUser()
-        setListUser(data.DT)
+    const fetchListUsersWithPage = async (page) => {
+        let data = await getListUserPage(page, LIMIT_USER);
+        if (data.EC === 0) {
+            setListUser(data.DT.users);
+            setPageCount(data.DT.totalPages)
+        }
     }
 
     const handleClickBtnUpdate = (user) => {
@@ -55,12 +60,14 @@ const ManageUser = (props) => {
                         handleClickBtnUpdate={handleClickBtnUpdate}
                         handleClickBtnDetail={handleClickBtnDetail}
                         handleClickBtnDelete={handleClickBtnDelete}
+                        fetchListUsersWithPage={fetchListUsersWithPage}
+                        pageCount={pageCount}
                     ></TableUser>
                 </div>
                 <ModalCreateUser
                     showCreateModal={showCreateModal}
                     setShowCreateModal={setShowCreateModal}
-                    fetchListUsers={fetchListUsers}
+                    fetchListUsersWithPage={fetchListUsersWithPage}
                 >
                 </ModalCreateUser>
 
@@ -68,7 +75,7 @@ const ManageUser = (props) => {
                     showUpdateModal={showUpdateModal}
                     setShowUpdateModal={setShowUpdateModal}
                     dataUpdate={dataUpdate}
-                    fetchListUsers={fetchListUsers}
+                    fetchListUsersWithPage={fetchListUsersWithPage}
                 >
                 </ModalUpdateUser>
 
@@ -83,7 +90,7 @@ const ManageUser = (props) => {
                     showDeleteModal={showDeleteModal}
                     setShowDeleteModal={setShowDeleteModal}
                     dataUpdate={dataUpdate}
-                    fetchListUsers={fetchListUsers}
+                    fetchListUsersWithPage={fetchListUsersWithPage}
                 >
                 </ModalConfirmDeleteUser>
             </div>

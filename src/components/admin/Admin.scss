@@ -17,5 +17,10 @@
 
     }
 
-    .admin-main {}
+    .admin-main {
+        .page-container {
+            display: flex;
+            justify-content: center;
+        }
+    }
 }
