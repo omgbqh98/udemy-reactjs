@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import _ from 'lodash';
 const ModalUpdateUser = (props) => {
     // const [show, setShow] = useState(false);
-    const { showUpdateModal, setShowUpdateModal, dataUpdate } = props;
+    const { showUpdateModal, setShowUpdateModal, dataUpdate, currentPage, setCurrentPage } = props;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -49,7 +49,7 @@ const ModalUpdateUser = (props) => {
         if (data && data.EC === 0) {
             toast.success(data.EM);
             handleClose();
-            await props.fetchListUsersWithPage(1);
+            await props.fetchListUsersWithPage(currentPage);
         }
         if (data && data.EC !== 0) {
             toast.error(data.EM);

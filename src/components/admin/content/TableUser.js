@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react';
 
 const TableUser = (props) => {
 
+
     const handlePageClick = (event) => {
         props.fetchListUsersWithPage(+event.selected + 1);
+        props.setCurrentPage(+event.selected + 1);
         console.log(`User requested page number ${event.selected}`);
     };
 
-    const { listUser, pageCount } = props;
+    const { listUser, pageCount, currentPage } = props;
     return (
         <>
             <table className="table table-hover">
@@ -61,6 +63,7 @@ const TableUser = (props) => {
                     containerClassName="pagination"
                     activeClassName="active"
                     renderOnZeroPageCount={null}
+                    forcePage={currentPage - 1}
                 />
             </div>
         </>

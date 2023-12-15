@@ -8,13 +8,14 @@ import ModalViewUser from './ModalViewUser';
 import ModalConfirmDeleteUser from './ModalConfirmDeleteUser';
 
 const ManageUser = (props) => {
-    const LIMIT_USER = 5;
+    const LIMIT_USER = 1;
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [dataUpdate, setDataUpdate] = useState({});
     const [pageCount, setPageCount] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
 
     const [listUser, setListUser] = useState([]);
 
@@ -62,12 +63,16 @@ const ManageUser = (props) => {
                         handleClickBtnDelete={handleClickBtnDelete}
                         fetchListUsersWithPage={fetchListUsersWithPage}
                         pageCount={pageCount}
+                        setCurrentPage={setCurrentPage}
+                        currentPage={currentPage}
                     ></TableUser>
                 </div>
                 <ModalCreateUser
                     showCreateModal={showCreateModal}
                     setShowCreateModal={setShowCreateModal}
                     fetchListUsersWithPage={fetchListUsersWithPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 >
                 </ModalCreateUser>
 
@@ -76,6 +81,8 @@ const ManageUser = (props) => {
                     setShowUpdateModal={setShowUpdateModal}
                     dataUpdate={dataUpdate}
                     fetchListUsersWithPage={fetchListUsersWithPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 >
                 </ModalUpdateUser>
 
@@ -91,6 +98,8 @@ const ManageUser = (props) => {
                     setShowDeleteModal={setShowDeleteModal}
                     dataUpdate={dataUpdate}
                     fetchListUsersWithPage={fetchListUsersWithPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 >
                 </ModalConfirmDeleteUser>
             </div>
