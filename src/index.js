@@ -1,17 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import User from './components/user/User';
-import Admin from './components/admin/Admin';
-import Home from './components/home/Home';
-import ManageUser from './components/admin/content/ManageUser';
-import Dashboard from './components/admin/content/DashBoard';
-import Login from './components/auth/Login';
+import Layout from './Layout';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,18 +13,7 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<App />}>
-            <Route index element={<Home />}></Route>  //index để khi outlet ko trùng với link nào thì sẽ vào index
-            <Route path='/users' element={<User />}></Route>
-          </Route>
-          <Route path='/admin' element={<Admin />}>
-            <Route index element={<Dashboard />}></Route>
-            <Route path='manage-users' element={<ManageUser />}></Route>
-          </Route>
-          <Route path='/login' element={<Login />}>
-          </Route>
-        </Routes>
+        <Layout></Layout>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>
