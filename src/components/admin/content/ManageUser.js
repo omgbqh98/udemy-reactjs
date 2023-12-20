@@ -8,7 +8,7 @@ import ModalViewUser from './ModalViewUser';
 import ModalConfirmDeleteUser from './ModalConfirmDeleteUser';
 
 const ManageUser = (props) => {
-    const LIMIT_USER = 1;
+    const LIMIT_USER = 6;
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);

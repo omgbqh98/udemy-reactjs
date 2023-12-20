@@ -9,6 +9,15 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
+        if (!validateEmail(email)) {
+            toast.error("Invalid email")
+            return;
+        }
+
+        if (!password) {
+            toast.error("please input email")
+            return;
+        }
         let data = await postLogin(email, password);
 
         //validate
@@ -27,7 +36,7 @@ const Login = (props) => {
         <div className="login-container">
             <div className="header">
                 <span>Don't have an account yet?</span>
-                <button>Sign up</button>
+                <button onClick={() => { navigate('/register') }}>Sign up</button>
             </div>
             <div className="title col-4 mx-auto">
                 Huynh holtel
