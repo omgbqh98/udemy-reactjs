@@ -6,6 +6,7 @@ import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import { postRegister } from '../../service/apiServices';
+import { validateEmail } from '../../ultils/validate.js'
 const Register = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,14 +14,6 @@ const Register = (props) => {
     const [type, setType] = useState('password');
     const [icon, setIcon] = useState(eyeOff);
     const navigate = useNavigate();
-
-    const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
 
     const handleToggle = () => {
 
