@@ -6,11 +6,14 @@ import { toast } from 'react-toastify';
 import { validateEmail } from '../../ultils/validate.js';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/userAction.js';
+import { ImSpinner } from "react-icons/im";
 const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isDelay, setIsDelay] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
 
     const handleLogin = async () => {
         //validate
@@ -23,16 +26,19 @@ const Login = (props) => {
             toast.error("please input email")
             return;
         }
+        setIsDelay(true);
         let data = await postLogin(email, password);
 
 
         if (data && data.EC === 0) {
             dispatch(doLogin(data));
             toast.success(data.EM);
+            setIsDelay(false);
             navigate('/')
         }
         if (data && data.EC !== 0) {
             toast.error(data.EM);
+            setIsDelay(false);
         }
 
         console.log(data)
@@ -70,7 +76,10 @@ const Login = (props) => {
                 </div>
                 <span className='forgot-password'>Forgot password?</span>
                 <div>
-                    <button onClick={() => handleLogin()} className='btn-submit'>Login</button>
+                    <button onClick={() => handleLogin()} className='btn-submit' disabled={isDelay}>
+                        {isDelay && <ImSpinner className='loaderIcon'></ImSpinner>}
+                        <span>Login</span>
+                    </button>
                 </div>
                 <div className='text-center'>
                     <span className='back' onClick={() => { navigate('/') }}> &#60;&#60; Go back home</span>
